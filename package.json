@@ -1,0 +1,33 @@
+{
+  "name": "zfx",
+  "version": "1.0.0",
+  "description": "zfx",
+  "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.2.1",
+    "koa-session": "^5.5.0",
+    "koa-static": "^4.0.1",
+    "koa2-cors": "^2.0.4",
+    "moment": "^2.19.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuxingZhang/question.git"
+  },
+  "keywords": [
+    "zfx"
+  ],
+  "author": "zfx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fuxingZhang/question/issues"
+  },
+  "homepage": "https://github.com/fuxingZhang/question#readme"
+}
