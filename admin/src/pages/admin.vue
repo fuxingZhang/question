@@ -24,7 +24,6 @@ export default {
   async created(){
     let res = await API.test()
     console.log(res)
-    alert(res)
   },
   methods: {
   }

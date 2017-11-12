@@ -103,6 +103,9 @@ export default {
         password: this.password
       })
       console.log(res)
+      if( res.status == 200 ){
+        this.$router.push('/admin')
+      }
       this.$message({
         showClose: true,
         message: res.data,
