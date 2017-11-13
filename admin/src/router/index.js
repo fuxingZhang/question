@@ -39,17 +39,6 @@ const router = new Router({
 
 router.beforeEach( async(to, from, next) => {
 
-  let res = await API.checkLogin()
-
-  if( res.status != 200 ){
-    this.$message({
-      showClose: true,
-      message: '登录状态已失效，请重新登陆',
-      type: 'error'
-    });
-    this.$router.push('/login')
-  }
-
   document.title = to.name
 
   next()

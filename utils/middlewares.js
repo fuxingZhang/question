@@ -22,7 +22,7 @@ module.exports = {
     token = JSON.parse( token )
     let email = token.email
     if( token.id != global.session[email] ){
-      ctx.throw(401,'登陆信息验证失败，请重新登录')
+      ctx.throw(401,'登陆状态已失效，请重新登录')
     }
 
     await next()

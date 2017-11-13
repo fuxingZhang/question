@@ -74,7 +74,7 @@ export default {
     if( res.status != 200 ){
       this.$message({
         showClose: true,
-        message: res.statusText,
+        message: res.data,
         type: 'error'
       });
       return

@@ -52,7 +52,7 @@ router
 })
 
 const middlewares = require('../utils/middlewares')
-// router.use(middlewares.checkLogin)
+router.use(middlewares.checkLogin)
 
 router
 .post('/logout', async ctx =>{

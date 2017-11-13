@@ -13,11 +13,6 @@ const request = axios.create({
 
 request.interceptors.response.use((response) => {
   if( response.status == 401 ){
-    this.$message({
-      showClose: true,
-      message: '登录状态已失效，请重新登陆',
-      type: 'error'
-    });
     location.hash = '/login'
   }
   return response
@@ -37,9 +32,6 @@ export default {
   },
   getUsers(){
     return request.get('/users')
-  },
-  checkLogin(){
-    return request.get('/checkLogin')
   },
   deleteUser(data){
     return request.post('/deleteUser',data)
