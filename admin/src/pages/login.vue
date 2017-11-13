@@ -73,7 +73,7 @@ export default {
         });
         return
       }
-      // const reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+      // const reg = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
       // if( !reg.test(this.email) ){
       //   this.$message({
       //     showClose: true,
@@ -104,11 +104,12 @@ export default {
       })
       console.log(res)
       if( res.status == 200 ){
+        localStorage.setItem('wjdc-user-name-zfx',res.data.name)    
         this.$router.push('/admin')
       }
       this.$message({
         showClose: true,
-        message: res.data,
+        message: res.status == 200 ? res.data.msg : res.data,
         type: res.status == 200 ? 'success' : 'error'
       });
       if ( res.status == 200 && this.checked == true ) {

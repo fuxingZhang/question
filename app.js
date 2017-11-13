@@ -3,7 +3,6 @@ const app = new Koa();
 const Router = require('koa-router')
 const router = require('./routes')
 const koaBody = require('koa-body')
-const session = require('koa-session')
 
 app.use(koaBody());
 
@@ -22,8 +21,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}`)
 });
 
-app.keys = ['koa cookie session secret', 'zfx']
-app.use(session(app))
+app.keys = ['some secret hurr'];
 
 // route
 app

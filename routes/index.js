@@ -9,6 +9,8 @@ const router  = new Router({
   prefix: '/api'
 })
 
+global.session = { }
+
 router
 .post('/register', async ctx => {
   const data = ctx.request.body
@@ -25,9 +27,8 @@ router
   ctx.body = '注册成功'
 })
 .post('/login', async ctx => {
-	console.log('req cookie', ctx.cookies.get('token-zfx', { signed: true }))
 	const data = ctx.request.body
-	console.log('/register',data)	
+	console.log('/login',data)	
 	const email = data.email
 	const password = data.password
 	const users = await fs.read("./models/users/users.json")
@@ -42,18 +43,75 @@ router
 		email: email,
 		id: new Date().getTime()
 	}
-	ctx.session[email] = token.id
-	ctx.cookies.set('token-zfx', JSON.stringify(token) , { signed: true, maxAge: 12*60*60*1000, httpOnly: true });
-  ctx.body = '登陆成功'
+	global.session[email] = token.id
+	ctx.cookies.set('token-zfx', JSON.stringify(token) , { maxAge: 12*60*60*1000, httpOnly: true });
+  ctx.body = {
+  	name: users[email].name,
+  	msg: '你好' + users[email].name + '，欢迎回来！'
+  }
 })
 
 const middlewares = require('../utils/middlewares')
-router.use(middlewares.checkLogin)
+// router.use(middlewares.checkLogin)
 
-router.get('/paper',async ctx => {
-	console.log('req cookie', ctx.cookies.get('token-zfx', { signed: true }))
-	console.log('paper')
-	ctx.body = ctx.session
+router
+.post('/logout', async ctx =>{
+	try{
+		const cookie = ctx.cookies.get('token-zfx')
+		if( cookie ){
+			const user = JSON.parse( cookie )
+			delete global.session[user.email]
+			//删除cookie
+			ctx.cookies.set('token-zfx', 'delete cookie', { maxAge: 5000, httpOnly: true });
+		}
+		ctx.body = '退出成功'
+	}catch(err){
+		ctx.throw(500, err)
+	}
+})
+.get('/users', async ctx =>{
+	try{
+		const users = await fs.read("./models/users/users.json")
+		ctx.body = users
+	}catch(err){
+		ctx.throw(500, err)
+	}
+})
+.put('/users', async ctx =>{
+	try{
+		const data = ctx.request.body
+		const users = await fs.read("./models/users/users.json")
+		const oldEmail = data.oldEmail
+		const email = data.email 
+		const name = data.name 
+		const password = data.password
+		const user = users[oldEmail]
+		console.log(user)
+		user.name = name
+		user.password = password
+		user.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
+		if( oldEmail !== email ){
+			user.email = email
+			users[email] = user
+			delete users[oldEmail]
+		}
+		await fs.write("./models/users/users.json",users)
+		ctx.body = '修改成功'
+	}catch(err){
+		ctx.throw(500, err)
+	}
+})
+.post('/deleteUser', async ctx =>{
+	try{
+		const data = ctx.request.body
+		const email = data.email 
+		const users = await fs.read("./models/users/users.json")
+		delete users[email]
+		await fs.write("./models/users/users.json",users)
+	  ctx.body = '删除成功'
+	}catch(err){
+		ctx.throw(500, err)
+	}
 })
 
 module.exports = router

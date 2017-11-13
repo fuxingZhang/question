@@ -12,6 +12,14 @@ const request = axios.create({
 })
 
 request.interceptors.response.use((response) => {
+  if( response.status == 401 ){
+    this.$message({
+      showClose: true,
+      message: '登录状态已失效，请重新登陆',
+      type: 'error'
+    });
+    location.hash = '/login'
+  }
   return response
 }, (error) => {
   return Promise.reject(error)
@@ -24,7 +32,19 @@ export default {
   register(data){
     return request.post('/register',data)
   },
-  test(){
-    return request.get('/paper')
+  logout(){
+    return request.post('/logout')
+  },
+  getUsers(){
+    return request.get('/users')
+  },
+  checkLogin(){
+    return request.get('/checkLogin')
+  },
+  deleteUser(data){
+    return request.post('/deleteUser',data)
+  },
+  updateUser(data){
+    return request.put('/users',data)
   }
 }

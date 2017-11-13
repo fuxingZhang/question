@@ -14,14 +14,14 @@ module.exports = {
     }
   },
   async checkLogin(ctx, next) {
-    console.log('req cookie', ctx.cookies.get('token-zfx', { signed: true }))
-    let token = ctx.cookies.get('token-zfx', { signed: true })
+    //console.log('checkLogin', ctx.cookies.get('token-zfx'))
+    let token = ctx.cookies.get('token-zfx')
     if( !token ){
       ctx.throw(401,'unauthorized')
     }
     token = JSON.parse( token )
     let email = token.email
-    if( token.id != ctx.session[email] ){
+    if( token.id != global.session[email] ){
       ctx.throw(401,'登陆信息验证失败，请重新登录')
     }
 

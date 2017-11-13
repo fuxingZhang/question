@@ -11,7 +11,7 @@
 		  <router-link to="/admin">
 				<el-menu-item index="1" class="h1"><h1>问卷系统</h1></el-menu-item>
 			</router-link>
-			<router-link v-if="logged" class="pc"  to="/admin/paper">
+			<router-link v-if="logged" class="pc" to="/admin/paper">
 				<el-menu-item index="2">问卷</el-menu-item>
 			</router-link>
 			<router-link v-if="logged" class="pc" to="/">
@@ -27,7 +27,7 @@
 		  	<el-menu-item index="6" class="right">登录</el-menu-item>
 		  </router-link>
 		  <el-submenu v-if="logged" index="7" class="right">
-		    <template slot="title">张复星</template>
+		    <template slot="title">{{name}}</template>
 		    <el-menu-item class="unseen" index="7-1">问卷</el-menu-item>
 		    <el-menu-item class="unseen" index="7-2">资料</el-menu-item>
 		    <el-menu-item class="unseen" index="7-3">帐号管理</el-menu-item>
@@ -38,39 +38,58 @@
 </template>
 
 <script>
-	export default {
-		data(){
-			return {
-				logged:false,
-				name:''
-			}
-		},
-		created(){
-			const path = this.$route.path
+import API from '@/API'
+
+export default {
+	data(){
+		return {
+			logged:false,
+			name:''
+		}
+	},
+	created(){
+		const path = this.$route.path
+		if( path=='/login' || path=='/register' || path=='/reset' ) {
+			this.logged = false
+		}else{
+			this.logged = true
+			this.name = localStorage.getItem('wjdc-user-name-zfx')				
+		}
+	},
+	watch: {
+		$route(to,from){
+			const path = to.path
 			if( path=='/login' || path=='/register' || path=='/reset' ) {
 				this.logged = false
 			}else{
 				this.logged = true
 				this.name = localStorage.getItem('wjdc-user-name-zfx')				
 			}
-		},
-		watch: {
-			$route(to,from){
-				const path = to.path
-				if( path=='/login' || path=='/register' || path=='/reset' ) {
-					this.logged = false
-				}else{
-					this.logged = true
-					this.name = localStorage.getItem('wjdc-user-name-zfx')				
-				}
-			}
-		},
-		methods: {
-			handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      }
 		}
+	},
+	methods: {
+		async handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      switch( key ){
+	      case '7-1' :
+	      	this.$router.push('/admin/paper')
+	      	break
+	      case '7-3' :
+	      	this.$router.push('/admin/account')
+	      	break
+      	case '7-4' :
+      		let res = await API.logout()
+	      	this.$message({
+		        showClose: true,
+		        message: res.data,
+		        type: res.status == 200 ? 'success' : 'error'
+		      });
+	      	this.$router.push('/login')
+	      	break
+      }
+    }
 	}
+}
 </script>
 
 <style>

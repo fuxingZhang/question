@@ -13,6 +13,7 @@ import categoryCreate from '@/pages/categoryCreate.vue'
 import categoryTitle from '@/pages/categoryTitle.vue'
 import categoryEdit from '@/pages/categoryEdit.vue'
 import report from '@/pages/report.vue'
+import API from '@/API'
 
 Vue.use(Router)
 
@@ -38,9 +39,16 @@ const router = new Router({
 
 router.beforeEach( async(to, from, next) => {
 
-	// if( !token ) {
-	// 	this.$router.push('/login')
-	// }
+  let res = await API.checkLogin()
+
+  if( res.status != 200 ){
+    this.$message({
+      showClose: true,
+      message: '登录状态已失效，请重新登陆',
+      type: 'error'
+    });
+    this.$router.push('/login')
+  }
 
   document.title = to.name
 
