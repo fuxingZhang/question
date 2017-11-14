@@ -14,7 +14,7 @@
 			<router-link v-if="logged" class="pc" to="/admin/paper">
 				<el-menu-item index="2">问卷</el-menu-item>
 			</router-link>
-			<router-link v-if="logged" class="pc" to="/">
+			<router-link v-if="logged" class="pc" to="/admin/paper">
 				<el-menu-item index="3">资料</el-menu-item>
 			</router-link>
 			<router-link v-if="logged" class="pc" to="/admin/account">
@@ -72,6 +72,9 @@ export default {
       console.log(key, keyPath);
       switch( key ){
 	      case '7-1' :
+	      	this.$router.push('/admin/paper')
+	      	break
+	      case '7-2' :
 	      	this.$router.push('/admin/paper')
 	      	break
 	      case '7-3' :

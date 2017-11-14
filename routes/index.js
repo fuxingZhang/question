@@ -52,7 +52,7 @@ router
 })
 
 const middlewares = require('../utils/middlewares')
-router.use(middlewares.checkLogin)
+// router.use(middlewares.checkLogin)
 
 router
 .post('/logout', async ctx =>{
@@ -87,10 +87,13 @@ router
 		const password = data.password
 		const user = users[oldEmail]
 		console.log(user)
+		if( email !== oldEmail &&  users[email] ){
+			ctx.throw(406,'您输入的新邮箱已经存在，请更换其他邮箱')
+		}
 		user.name = name
 		user.password = password
 		user.updated_at = moment().format("YYYY-MM-DD HH:mm:ss")
-		if( oldEmail !== email ){
+		if( email !== oldEmail ){
 			user.email = email
 			users[email] = user
 			delete users[oldEmail]

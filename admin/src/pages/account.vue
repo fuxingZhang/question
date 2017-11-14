@@ -65,6 +65,7 @@ export default {
         confirm:'',
         oldEmail:''
       },
+      index:0,
       formLabelWidth: '80px'
     }
   },
@@ -94,9 +95,23 @@ export default {
       this.form.confirm = ''
       this.form.oldEmail = row.email,
       this.dialogFormVisible = true
+      this.index = index
     },
     async handleDelete(index, row) {
       console.log(index, row)
+      let confirm = await this.$confirm('此操作将永久删除邮箱帐号：'+row.email+'，是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).catch( (err) =>{
+        //console.log('err',err)
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      })
+      if( !confirm ) return
       let res = await API.deleteUser({
         email: row.email
       })
@@ -166,6 +181,9 @@ export default {
       console.log(res)
       if( res.status == 200 ){
         this.dialogFormVisible = false
+        this.tableData[this.index].name = this.form.name
+        this.tableData[this.index].eamil = this.form.email
+        this.tableData[this.index].password = this.form.password
       }
       this.$message({
         showClose: true,
