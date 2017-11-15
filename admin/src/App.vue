@@ -89,4 +89,9 @@ body{
   background: #359368;
   border-color: #2b7956;
 }
+.el-button--success.is-disabled, .el-button--success.is-disabled:active, .el-button--success.is-disabled:focus, .el-button--success.is-disabled:hover {
+  color: #fff;
+  background-color: #42b983;
+  border-color: #3ba676;
+}
 </style>

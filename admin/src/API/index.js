@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const Util = {
-  // host: 'http://localhost:3000/api/'
-  host: 'http://39.106.25.139:3000/api/'
+  host: 'http://localhost:3000/api/'
+  // host: 'http://39.106.25.139:3000/api/'
 }
 
 const request = axios.create({
@@ -39,5 +39,29 @@ export default {
   },
   updateUser(data){
     return request.put('/users',data)
+  },
+  getPapers(){
+    return request.get('/papers')
+  },
+  createPaper(data){
+    return request.post('/createPaper',data)
+  },
+  getPaper(id){
+    return request.get('/paper/'+id)
+  },
+  updatePaper(data){
+    return request.put('/paper', data)
+  },
+  getCategories(id){
+    return request.get('/categories/'+id)
+  },
+  createCategory(id,data){
+    return request.post('/category/'+id, data)
+  },
+  getCategory(id,query){
+    return request.get('/category/'+id+'/'+query)
+  },
+  updateCategory(id,query,data){
+    return request.put('/category/'+id+'/'+query, data)
   }
 }

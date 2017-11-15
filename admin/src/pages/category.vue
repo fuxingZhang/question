@@ -1,129 +1,62 @@
 <template>
-	<div class="category">
-		<el-card class="box-card">
-		  <div slot="header" class="clearfix">
-		    <span style="font-size: 18px;line-height: 36px;">感统测评</span>
-		    <div class="fr" >
-		    	<router-link to="/admin/category/create/8" class="btn">添加类目</router-link>
-		    </div>
-		  </div>
-		  <div>
-  			<el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
-					<div class="list-box ">
-						<h3>
-							<router-link to="/admin/category/title/8">一. 前庭平衡和大脑分化</router-link>
-						</h3>
-						<div class="line-box">
-							<span></span>
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span>
-						</div> 
-						<p class="btn-group">
-							<a href="/admin/category/edit/8" class="btn-edit">问题管理</a> 
-							<a href="/admin/report/8" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
-						</p>
-					</div>
-  			</el-col>
-  			<el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
-					<div class="list-box ">
-						<h3>
-							<a class="underline" href="/8">感统测评</a>
-						</h3>
-						<div class="line-box">
-							<span></span>
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span>
-						</div> 
-						<p class="btn-group">
-							<a href="paper/8" class="btn-edit">问题管理</a> 
-							<a href="#" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
-						</p>
-					</div>
-  			</el-col>
-  			<el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
-					<div class="list-box ">
-						<h3>
-							<a class="underline" href="/8">三. 触觉防御过多、不足</a>
-						</h3>
-						<div class="line-box">
-							<span></span>
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span>
-						</div> 
-						<p class="btn-group">
-							<a href="paper/8" class="btn-edit">问题管理</a> 
-							<a href="#" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
-						</p>
-					</div>
-  			</el-col>
-  			<el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
-					<div class="list-box ">
-						<h3>
-							<a class="underline" href="/8">感统测评</a>
-						</h3>
-						<div class="line-box">
-							<span></span>
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span>
-						</div> 
-						<p class="btn-group">
-							<a href="paper/8" class="btn-edit">问题管理</a> 
-							<a href="#" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
-						</p>
-					</div>
-  			</el-col>
-  			<el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
-					<div class="list-box ">
-						<h3>
-							<a class="underline" href="/8">感统测评</a>
-						</h3>
-						<div class="line-box">
-							<span></span>
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span>
-						</div> 
-						<p class="btn-group">
-							<a href="paper/8" class="btn-edit">问题管理</a> 
-							<a href="#" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
-						</p>
-					</div>
-  			</el-col>
-  			<el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
-					<div class="list-box ">
-						<h3>
-							<a class="underline" href="paper/8">感统测评</a>
-						</h3>
-						<div class="line-box">
-							<span></span>
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span> 
-							<span></span>
-						</div> 
-						<p class="btn-group">
-							<a href="paper/8" class="btn-edit">问题管理</a> 
-							<a href="#" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
-						</p>
-					</div>
-  			</el-col>
-		  </div>
-		</el-card>
+	<div class="category-edit">
+		<div class="left-box">
+			<el-card class="box-card">
+			  <div slot="header" class="clearfix">
+			    <span style="font-size: 18px;line-height: 40px;">问题</span>
+					<div class="fr" >
+			    	<el-button type="success">添加问题</el-button>
+			    </div>
+			  </div>
+			  <div class="left-list">
+			    <div>1. 儿童特别爱玩旋转圆凳或飞转设施，长时间不觉晕，或者略晕却特别喜欢晕的感觉。</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			    <div>111</div>
+			  </div>
+			</el-card>
+		</div>
+
+		<div class="right-box">
+			<el-card class="box-card">
+			  <div slot="header" class="clearfix">
+			    <span style="font-size: 18px;line-height: 40px;">编辑问题</span>
+			    <el-button type="danger" class="fr">删除</el-button>
+			  </div>
+			  <div>
+			  	<el-input v-model="input" placeholder="请输入标题"></el-input>
+			    <div v-for="item in 5" style="display: flex;margin-top: 15px;">
+			    	<div style="flex:1;">
+			    		<el-input v-model="input" placeholder="请输入内容"></el-input>
+			    	</div>
+			    	<div style="width: 70px;margin-left: 20px;">
+			    		<el-input v-model="input" placeholder=""></el-input>
+			    	</div>
+						<div style="width: 70px;margin-left: 20px;">
+							<el-button type="danger">删除</el-button>
+						</div>
+			    </div>
+			    <div style="margin: 15px 0;">
+			    	<el-button style="width:100%;">新建选项</el-button>
+			    </div>
+					<div class="fr" style="margin-bottom: 25px;">
+			    	<el-button type="success">确认</el-button>
+			    </div>
+			  </div>
+			</el-card>
+		</div>
+
 	</div>
 </template>
 
@@ -135,108 +68,68 @@
 			}
 		},
 		created(){
-			console.log(this.$route.params.id)
 		}
 	}
 </script>
 
 <style>
-.category{
-  margin: 24px auto 60px;
-  max-width: 880px;
+.category-edit{
+  margin: 15px;
 }
-.category .btn{
-	font-weight: 400;
-	text-shadow: none;
-	border-radius: 1px;
-	color: #fff;
-	background-color: #42b983;
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
-	touch-action: manipulation;
-  border: 1px solid #3ba676;
-  padding: 6px 12px;
-  user-select: none;
+.category-edit .left-box{
+	margin-bottom: 15px;
 }
-.category .btn:hover{
-	background-color: #359368;
-	border-color: #2b7956;
-	outline: 0;
+.category-edit .left-list>div{
+	padding: 10px;
+	font-size: 16px;
+	-webkit-transition: all .3s;
+	transition: all .3s;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+	border-radius: 3px;
 }
-.category .list-box {
-  position: relative;
-  height: 240px;
-  padding: 15px;
-  margin: 10px;
-  margin-bottom: 20px;
-  background-color: #f8f8f8;
-  box-shadow: 3px 3px 6px rgba(0,0,0,.1);
-}
-.category .list-box h3 {
-  font-size: 16px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.category .list-box .line-box {
-  margin-top: 20px;
-}
-.category .list-box .btn-group {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 36px;
-  line-height: 36px;
-  -webkit-display: flex;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.category .list-box .btn-group a.btn-edit, .list-box .btn-group a.btn-produce {
-  display: block;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  padding: 0 8px;
+.category-edit .left-list>div:hover{
+  background-color: #2a3f54;
   color: #fff;
-  text-align: center;
-  text-decoration: none;
 }
-.category .list-box .btn-group a.btn-edit {
-   background-color: #2a3f54;
-}
-.category .list-box .btn-group a.btn-produce {
-    background-color: #f66;
-}
-.category .list-box .btn-group a.btn-edit:hover, .list-box .btn-group a.btn-produce:hover {
-    opacity: .8;
-}
-.category .list-box .line-box span {
-  display: block;
-  width: 50%;
-  height: 2px;
-  margin-bottom: 12px;
-  background-color: #333;
-}
-.category a {
-  color: #2a3f54;
-  text-decoration: none;
-}
-.category a.underline:focus, a.underline:hover {
-    color: #111921;
-    text-decoration: underline;
-}
-.category .list-box .line-box span:nth-of-type(4), .list-box .line-box span:nth-of-type(5), .list-box .line-box span:nth-of-type(6) {
-  width: 70%;
-}
-.category .el-card__header {
-  padding: 14px 20px;
-}
-@media screen and (max-width: 767px) {
-	.category{
-	  margin: 24px 15px;
+@media screen and (min-width: 992px) {
+	.category-edit{
+		position: absolute;
+		top: 70px;
+		bottom: 0;
+		left: 10%;
+		right: 10%;
+	  overflow: hidden;
+	  display: flex;
+	}
+	.category-edit .left-box{
+		flex: 1;
+		margin: 0 10px;
+		height: 100%;
+		position: relative;
+	}
+	.category-edit .right-box{
+		flex: 2;
+		margin: 0 10px;
+		position: relative;
+	}
+	.category-edit .box-card{
+		position: absolute;
+		height: 96%;
+		width: 100%;
+	}
+	.category-edit .el-card__body{
+		position: absolute;
+		overflow-y: auto;
+		top: 70px;
+		bottom: 0;
+		right: 0;
+		left: 0;
+	}
+	.category-edit ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    display: none;
 	}
 }
 </style>

@@ -5,31 +5,60 @@
 		    <span>添加类目</span>
 		  </div>
 		  <div>
-  			<el-input v-model="title" placeholder="请输入标题"></el-input>
+  			<el-input v-model="data.title" placeholder="请输入标题"></el-input>
   			<el-input
 				  type="textarea"
 				  class="textarea"
+				  resize="none"
 				  :autosize="{ minRows: 4, maxRows: 8}"
 				  placeholder="请输入内容"
-				  v-model="content">
+				  v-model="data.description">
 				</el-input>
-				<router-link to="/" class="btn">确认</router-link>
+				<el-button type="success" @click="submit" :disabled="disabled">保存</el-button>
 		  </div>
 		</el-card>
 	</div>
 </template>
 
 <script>
-	export default {
-		data(){
-			return{
+import API from '@/API'
+
+export default {
+	data(){
+		return{
+			data:{
 				title:'',
-				content:''
+				description:''
+			},
+			disabled:false
+		}
+	},
+	methods: {
+		async submit(){
+			if( !this.data.title ){
+				this.$message({
+	        showClose: true,
+	        message: '请输入标题',
+	        type: 'error'
+	      });
+				return
 			}
-		},
-		created(){
+			this.disabled = true
+			let res = await API.createCategory(this.$route.params.id, this.data)
+			console.log('createCategory',res)
+			this.$message({
+        showClose: true,
+        message: res.data,
+        type: res.status == 200 ? 'success' : 'error'
+      });
+      if( res.status == 200 ){
+      	this.$router.go(-1)
+      }else{
+      	this.disabled = false
+      }
 		}
 	}
+}
 </script>
 
 <style>
