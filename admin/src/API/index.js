@@ -63,5 +63,9 @@ export default {
   },
   updateCategory(id,query,data){
     return request.put('/category/'+id+'/'+query, data)
-  }
+  },
+  deleteCategory(id,query){
+    return request.delete('/category/'+id+'/'+query)
+  },
+  
 }

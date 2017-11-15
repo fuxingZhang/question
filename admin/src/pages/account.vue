@@ -105,7 +105,6 @@ export default {
         type: 'warning',
         center: true
       }).catch( (err) =>{
-        //console.log('err',err)
         this.$message({
           type: 'info',
           message: '已取消删除'

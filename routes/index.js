@@ -241,5 +241,17 @@ router
 		ctx.throw(500, err)
 	}
 })
+.delete('/category/:id/:query', async ctx =>{
+	try{
+		const id = ctx.params.id
+		const query = ctx.params.query
+		const paper = await fs.read(`./models/papers/${id}.json`)
+		delete paper.categories[query]
+		await fs.write(`./models/papers/${id}.json`,paper)
+		ctx.body = '删除类目成功'
+	}catch(err){
+		ctx.throw(500, err)
+	}
+})
 
 module.exports = router

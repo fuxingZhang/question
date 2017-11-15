@@ -3,6 +3,7 @@
 		<el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		    <span>编辑类目</span>
+		    <el-button type="danger" @click="remove" class="fr">删除</el-button>
 		  </div>
 		  <div>
   			<el-input v-model="data.title" placeholder="请输入标题"></el-input>
@@ -63,6 +64,30 @@ export default {
       	this.$router.go(-1)
       }else{
       	this.disabled = false
+      }
+		},
+		async remove(){
+      let confirm = await this.$confirm('此操作将永久删除该类目，是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).catch( (err) =>{
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      })
+      if( !confirm ) return
+			let res = await API.deleteCategory(this.$route.params.id, this.$route.params.query)
+			console.log('deleteCategory',res)
+			this.$message({
+        showClose: true,
+        message: res.data,
+        type: res.status == 200 ? 'success' : 'error'
+      });
+      if( res.status == 200 ){
+      	this.$router.go(-1)
       }
 		}
 	}
