@@ -54,7 +54,7 @@
 					<div style="flex:1;"><el-input v-model="URL" readonly></el-input></div>
 					<div style="width:74px;">
 							 <el-tooltip :disabled="disabled" class="item" effect="dark" content="复制成功" placement="right">
-					      <el-button v-clipboard="copyData" @click="showTip">复制</el-button>
+					      <el-button v-clipboard="URL" @click="showTip">复制</el-button>
 					    </el-tooltip>
 					</div>
 				</div>
@@ -83,7 +83,6 @@ export default {
 		return{
 			dialogFormVisible:false,
 			papers:{},
-			copyData: 'copy 1111',
 			disabled: true,
 			URL:'',
 			background:'#fff',
