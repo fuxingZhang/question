@@ -33,7 +33,7 @@ const router = new Router({
     { path: '/admin/paper/:id/category/create', component: categoryCreate, name:'添加类目' }, 
     { path: '/admin/paper/:id/category/edit/:query', component: categoryEdit, name:'编辑类目' }, 
     { path: '/admin/paper/:id/category/:query', component: category, name:'题目管理' }, 
-    { path: '/admin/report/:id', component: report, name:'测评报告' }, 
+    { path: '/admin/paper/:id/report/:query', component: report, name:'测评报告' }, 
   ]
 })
 

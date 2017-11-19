@@ -30,13 +30,13 @@ app
 
 const path = require('path')
 serve = require("koa-static")
-app.use(serve(path.join(__dirname, "/admin/dist")))
+app.use(serve(path.join(__dirname, "/public")))
 
 //用来捕获api和资源文件外的请求,所以要放在最后面
 const IndexRouter = new Router()
 IndexRouter.all('*', async  ctx => {
   console.log('api和资源文件外的请求')
-	ctx.body = 'api和资源文件外的请求'
+	ctx.throw( 404, 'api和资源文件外的请求')
 })
 app
 .use(IndexRouter.routes())
@@ -44,6 +44,7 @@ app
 // error
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
+  ctx.throw( err.status || 500, err)
 })
 
 app.listen(3000)

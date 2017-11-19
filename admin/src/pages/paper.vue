@@ -8,7 +8,7 @@
 		    </div>
 		  </div>
 		  <div>
-  			<el-col v-for="item in categories" :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
+  			<el-col v-for="(item,index) in categories" :key="index" :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
 					<div class="list-box ">
 						<h3>
 							<router-link :to="'/admin/paper/'+id+'/category/edit/'+item.id">{{item.title}}</router-link>
@@ -23,7 +23,7 @@
 						</div> 
 						<p class="btn-group">
 							<router-link class="btn-edit" :to="'/admin/paper/'+id+'/category/'+item.id">问题管理</router-link>
-							<a href="/admin/report/8" data-toggle="modal" data-target="#reportModal" class="btn-produce">测评报告</a>
+							<router-link class="btn-produce" :to="'/admin/paper/'+id+'/report/'+item.id">测评报告</router-link>
 						</p>
 					</div>
   			</el-col>

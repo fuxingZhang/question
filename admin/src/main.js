@@ -10,7 +10,9 @@ import '@/css/reset.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
+import VueClipboards from 'vue-clipboards';
 
+Vue.use(VueClipboards);
 Vue.use(ElementUI)
 
 new Vue({

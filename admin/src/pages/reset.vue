@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from '@/utils/axios_package'
+import API from '@/API'
 
 export default {
   data(){

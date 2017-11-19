@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const Util = {
-  host: 'http://localhost:3000/api/'
-  // host: 'http://39.106.25.139:3000/api/'
+  // host: 'http://localhost:3000/api/'
+  host: 'http://39.106.25.139:3000/api/'
 }
 
 const request = axios.create({
@@ -67,5 +67,22 @@ export default {
   deleteCategory(id,query){
     return request.delete('/category/'+id+'/'+query)
   },
-  
+  getQuestions(id,query){
+    return request.get('/questions/'+id+'/'+query)
+  },
+  questionsEdit(id,query,data){
+    return request.post('/questions/'+id+'/'+query, data)
+  },
+  questionDelete(id,query,data){
+    return request.delete('/questions/'+id+'/'+query+'/'+data)
+  },
+  getReports(id,query){
+    return request.get('/reports/'+id+'/'+query)
+  },
+  deleteReport(id,query,data){
+    return request.delete('/reports/'+id+'/'+query+'/'+data)
+  },
+  reportsEdit(id,query,data){
+    return request.post('/reports/'+id+'/'+query, data)
+  },
 }

@@ -13,6 +13,40 @@ const router  = new Router({
 global.session = { }
 
 router
+/**
+	*  前端
+	*
+	*/
+.get('/answer/:id', async ctx =>{
+	const id = ctx.params.id
+	const paper = await fs.read((`./models/papers/${id}.json`))
+	const categories = paper.categories
+	let files = []
+	for( let query in categories ){
+		files.push(fs.read(`./models/questions/${id}.${query}.json`))
+	}
+	let arr = await Promise.all(files)
+	let data = []
+	for( let item of arr ){
+		data.push(...item.items)
+	}
+	ctx.body = {
+		data
+	}
+})
+.post('/answer/:id', async ctx =>{
+	const id = ctx.params.id
+	const data = ctx.request.body
+	const time = new Date().getTime()
+	const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
+	data.created_at = now
+	await fs.write(`./models/answers/${time}-${data.name}.json`,data)
+	ctx.body = '提交成功'
+})
+/**
+	*  管理后台
+	*
+	*/
 .post('/register', async ctx => {
   const data = ctx.request.body
 	const now = moment().format('YYYY-MM-DD HH:mm:ss')
@@ -57,107 +91,79 @@ const middlewares = require('../utils/middlewares')
 
 router
 .post('/logout', async ctx =>{
-	try{
-		const cookie = ctx.cookies.get('token-zfx')
-		if( cookie ){
-			const user = JSON.parse( cookie )
-			delete global.session[user.email]
-			//删除cookie
-			ctx.cookies.set('token-zfx', 'delete cookie', { maxAge: 5000, httpOnly: true });
-		}
-		ctx.body = '退出成功'
-	}catch(err){
-		ctx.throw(500, err)
+	const cookie = ctx.cookies.get('token-zfx')
+	if( cookie ){
+		const user = JSON.parse( cookie )
+		delete global.session[user.email]
+		//删除cookie
+		ctx.cookies.set('token-zfx', 'delete cookie', { maxAge: 5000, httpOnly: true });
 	}
+	ctx.body = '退出成功'
 })
 .get('/users', async ctx =>{
-	try{
-		const users = await fs.read('./models/users/users.json')
-		ctx.body = users
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	const users = await fs.read('./models/users/users.json')
+	ctx.body = users
 })
 .put('/users', async ctx =>{
-	try{
-		const data = ctx.request.body
-		const users = await fs.read('./models/users/users.json')
-		const oldEmail = data.oldEmail
-		const email = data.email 
-		const name = data.name 
-		const password = data.password
-		const user = users[oldEmail]
-		console.log(user)
-		if( email !== oldEmail &&  users[email] ){
-			ctx.throw(406,'您输入的新邮箱已经存在，请更换其他邮箱')
-		}
-		user.name = name
-		user.password = password
-		user.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
-		if( email !== oldEmail ){
-			user.email = email
-			users[email] = user
-			delete users[oldEmail]
-		}
-		await fs.write('./models/users/users.json',users)
-		ctx.body = '修改成功'
-	}catch(err){
-		ctx.throw(500, err)
+	const data = ctx.request.body
+	const users = await fs.read('./models/users/users.json')
+	const oldEmail = data.oldEmail
+	const email = data.email 
+	const name = data.name 
+	const password = data.password
+	const user = users[oldEmail]
+	console.log(user)
+	if( email !== oldEmail &&  users[email] ){
+		ctx.throw(406,'您输入的新邮箱已经存在，请更换其他邮箱')
 	}
+	user.name = name
+	user.password = password
+	user.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	if( email !== oldEmail ){
+		user.email = email
+		users[email] = user
+		delete users[oldEmail]
+	}
+	await fs.write('./models/users/users.json',users)
+	ctx.body = '修改成功'
 })
 .post('/deleteUser', async ctx =>{
-	try{
-		const data = ctx.request.body
-		const email = data.email 
-		const users = await fs.read('./models/users/users.json')
-		delete users[email]
-		await fs.write('./models/users/users.json',users)
-	  ctx.body = '删除成功'
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	const data = ctx.request.body
+	const email = data.email 
+	const users = await fs.read('./models/users/users.json')
+	delete users[email]
+	await fs.write('./models/users/users.json',users)
+  ctx.body = '删除成功'
 })
 .get('/papers', async ctx =>{
 	let papers = await fs.read('./models/papers/papers.json')
 	ctx.body = papers
 })
 .post('/createPaper', async ctx =>{
-	try{
-		let paper = ctx.request.body
-		const time = new Date().getTime()
-		const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
-		paper.id = time
-		paper.created_at = now
-		paper.updated_at = now
-		let papers = await fs.read('./models/papers/papers.json')
-		papers[paper.id] = paper
-		await fs.write('./models/papers/papers.json',papers)
-		ctx.body = '添加问卷成功'
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	let paper = ctx.request.body
+	const time = new Date().getTime()
+	const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
+	paper.id = time
+	paper.created_at = now
+	paper.updated_at = now
+	let papers = await fs.read('./models/papers/papers.json')
+	papers[paper.id] = paper
+	await fs.write('./models/papers/papers.json',papers)
+	ctx.body = '添加问卷成功'
 })
 .get('/paper/:id', async ctx =>{
-	try{
-		const papers = await fs.read('./models/papers/papers.json')
-		const paper = papers[ctx.params.id]
-		ctx.body = paper
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	const papers = await fs.read('./models/papers/papers.json')
+	const paper = papers[ctx.params.id]
+	ctx.body = paper
 })
 .put('/paper', async ctx =>{
-	try{
-		const paper = ctx.request.body
-		const id = paper.id
-		const papers = await fs.read('./models/papers/papers.json')
-		paper.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
-		papers[id] = paper
-		await fs.write('./models/papers/papers.json',papers)
-		ctx.body = '问卷更新成功'
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	const paper = ctx.request.body
+	const id = paper.id
+	const papers = await fs.read('./models/papers/papers.json')
+	paper.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	papers[id] = paper
+	await fs.write('./models/papers/papers.json',papers)
+	ctx.body = '问卷更新成功'
 })
 .get('/categories/:id', async ctx =>{
 	try{
@@ -170,51 +176,37 @@ router
 	}
 })
 .post('/category/:id', async ctx =>{
+	const category = ctx.request.body
+	const id = ctx.params.id
+	const time = new Date().getTime()
+	const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
+	category.id = time
+	category.created_at = now
+	category.updated_at = now
 	try{
-		const category = ctx.request.body
-		const id = ctx.params.id
-		const time = new Date().getTime()
-		const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
-		category.id = time
-		category.created_at = now
-		category.updated_at = now
-		//官方不推荐
-		//不推荐在调用 fs.open，fs.readFile()，fs.writeFile() 之前使用 fs.exists() 检测文件是否存在。这样做会引起竞争条件，因为在两次调用之间，其他进程可能修改文件。作为替代，用户应该直接开/读取/写入文件，当文件不存在时再处理错误。
-		//不建议在调用 fs.open() 、 fs.readFile() 或 fs.writeFile() 之前使用 fs.access() 检查一个文件的可访问性。 如此处理会造成紊乱情况，因为其他进程可能在两个调用之间改变该文件的状态。 作为替代，用户代码应该直接打开/读取/写入文件，当文件无法访问时再处理错误。
-		// if( _fs.existsSync(`./models/paper/${id}.json`) ){
-		// 	const paper = await fs.read(`./models/papers/${id}.json`)
-		// 	paper.categoryies[category.id] = category
-		// 	await fs.write(`./models/papers/${id}.json`,paper)
-		// }else{
-		// 	const papers = await fs.read('./models/papers/papers.json')
-		// 	title = papers[id].title
-		// 	const paper = {
-		// 		title,
-		// 		categories:{}
-		// 	}
-		// 	paper.categories[time] = category
-		// 	await fs.write(`./models/papers/${id}.json`,paper)
-		// }
-		//官方推荐方法(注意，try catch 可以循环嵌套，内层处理，外层不会，除非在内层catch又抛出错误):
-		try{
-			const paper = await fs.read(`./models/papers/${id}.json`)
-			paper.categories[time] = category
-			await fs.write(`./models/papers/${id}.json`,paper)
-		}catch(err){
-			console.log(err)
-			const papers = await fs.read('./models/papers/papers.json')
-			title = papers[id].title
-			const paper = {
-				title,
-				categories:{}
-			}
-			paper.categories[time] = category
-			await fs.write(`./models/papers/${id}.json`,paper)
-		}
-		ctx.body = '添加类目成功'
+		const paper = await fs.read(`./models/papers/${id}.json`)
+		paper.categories[time] = category
+		await fs.write(`./models/papers/${id}.json`,paper)
 	}catch(err){
-		ctx.throw(500, err)
+		console.log(err)
+		const papers = await fs.read('./models/papers/papers.json')
+		title = papers[id].title
+		const paper = {
+			title,
+			categories:{}
+		}
+		paper.categories[time] = category
+		await fs.write(`./models/papers/${id}.json`,paper)
 	}
+	const quetions = reports = {
+		id: time,
+		created_at: now,
+		updated_at: now,
+		items:[]
+	}
+	await fs.write(`./models/questions/${id}.${time}.json`, quetions)
+	await fs.write(`./models/reports/${id}.${time}.json`, reports)
+	ctx.body = '添加类目成功'
 })
 .get('/category/:id/:query', async ctx =>{
 	try{
@@ -228,30 +220,78 @@ router
 	}
 })
 .put('/category/:id/:query', async ctx =>{
-	try{
-		const category = ctx.request.body
-		const id = ctx.params.id
-		const query = ctx.params.query
-		category.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
-		const paper = await fs.read(`./models/papers/${id}.json`)
-		paper.categories[query] = category
-		await fs.write(`./models/papers/${id}.json`,paper)
-		ctx.body = '类目更新成功'
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	const category = ctx.request.body
+	const id = ctx.params.id
+	const query = ctx.params.query
+	category.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	const paper = await fs.read(`./models/papers/${id}.json`)
+	paper.categories[query] = category
+	await fs.write(`./models/papers/${id}.json`,paper)
+	ctx.body = '类目更新成功'
 })
 .delete('/category/:id/:query', async ctx =>{
-	try{
-		const id = ctx.params.id
-		const query = ctx.params.query
-		const paper = await fs.read(`./models/papers/${id}.json`)
-		delete paper.categories[query]
-		await fs.write(`./models/papers/${id}.json`,paper)
-		ctx.body = '删除类目成功'
-	}catch(err){
-		ctx.throw(500, err)
-	}
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const paper = await fs.read(`./models/papers/${id}.json`)
+	delete paper.categories[query]
+	await fs.write(`./models/papers/${id}.json`,paper)
+	ctx.body = '删除类目成功'
+})
+.get('/questions/:id/:query', async ctx =>{
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const questions = await fs.read(`./models/questions/${id}.${query}.json`)
+	ctx.body = questions
+})
+.post('/questions/:id/:query', async ctx =>{
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const items = ctx.request.body
+	const questions = await fs.read(`./models/questions/${id}.${query}.json`)
+	questions.items = items
+	questions.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	await fs.write(`./models/questions/${id}.${query}.json`, questions)
+	ctx.body = '保存成功'
+})
+.delete('/questions/:id/:query/:index', async ctx =>{
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const index = ctx.params.index
+	const questions = await fs.read(`./models/questions/${id}.${query}.json`)
+	questions.items = questions.items.filter(function(item,i){
+		return i != index
+	})
+	questions.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	await fs.write(`./models/questions/${id}.${query}.json`, questions)
+	ctx.body = '删除成功'
+})
+.get('/reports/:id/:query', async ctx =>{
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const reports = await fs.read(`./models/reports/${id}.${query}.json`)
+	ctx.body = reports
+})
+.post('/reports/:id/:query', async ctx =>{
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const items = ctx.request.body
+	const reports = await fs.read(`./models/reports/${id}.${query}.json`)
+	reports.items = items
+	reports.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	await fs.write(`./models/reports/${id}.${query}.json`, reports)
+	ctx.body = '保存成功'
+})
+.delete('/reports/:id/:query/:index', async ctx =>{
+	const id = ctx.params.id
+	const query = ctx.params.query
+	const index = ctx.params.index
+	const reports = await fs.read(`./models/reports/${id}.${query}.json`)
+	reports.items = reports.items.filter(function(item,i){
+		return i != index
+	})
+	reports.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
+	await fs.write(`./models/reports/${id}.${query}.json`, reports)
+	ctx.body = '删除成功'
 })
 
 module.exports = router

@@ -8,7 +8,7 @@
 		    </div>
 		  </div>
 		  <div>
-  			<el-col v-for="paper in papers" :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
+  			<el-col v-for="(paper,index) in papers" :key="index" :xs="12" :sm="12" :md="8" :lg="8" :xl="8">
 					<div class="list-box ">
 						<h3>
 							<router-link :to="'/admin/paper/edit/' + paper.id">{{paper.title}}</router-link>
@@ -23,15 +23,49 @@
 						</div> 
 						<p class="btn-group">
 							<router-link :to="'/admin/paper/' + paper.id" class="btn-edit">类目管理</router-link>
-							<a href="#" class="btn-produce">生成问卷</a>
+							<a class="btn-produce" @click="dialog(paper.id)">生成问卷</a>
 						</p>
 					</div>
   			</el-col>
-			<!-- 
-					生成问卷，弹窗，显示信息
-	  			1、地址；
-	  			2、二维码 
-  		-->
+
+			<el-dialog title="生成问卷" :visible.sync="dialogFormVisible" center>
+				<div  style="width:100%;display:flex;">
+					<div style="flex:1;">
+						<div style="margin:0 auto 20px;width: 200px;">
+							<qrcode-vue :value="URL" size="200" level="H" 
+								:background="background" style="marin 0 auto"
+								:foreground="foreground"></qrcode-vue>
+						</div>
+					</div>
+					<div style="min-width:100px;">
+						<div style="line-height: 47px;">
+							<div>背景色：</div>
+							<el-color-picker v-model="background"></el-color-picker>
+						</div>
+						<div>
+							<div>前景色：</div>
+							<el-color-picker v-model="foreground"></el-color-picker>
+						</div>
+					</div>
+				</div>
+
+
+				<div style="width:100%;display:flex;">
+					<div style="flex:1;"><el-input v-model="URL" readonly></el-input></div>
+					<div style="width:74px;">
+							 <el-tooltip :disabled="disabled" class="item" effect="dark" content="复制成功" placement="right">
+					      <el-button v-clipboard="copyData" @click="showTip">复制</el-button>
+					    </el-tooltip>
+					</div>
+				</div>
+			  
+
+			  <div slot="footer" class="dialog-footer">
+			    <el-button @click="dialogFormVisible = false">取 消</el-button>
+			    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+			  </div>
+			</el-dialog>
+
 		  </div>
 		</el-card>
 	</div>
@@ -39,11 +73,21 @@
 
 <script>
 import API from '@/API'
+import QrcodeVue from 'qrcode.vue'
 
 export default {
+	components:{
+		QrcodeVue
+	},
 	data(){
 		return{
-			papers:{}
+			dialogFormVisible:false,
+			papers:{},
+			copyData: 'copy 1111',
+			disabled: true,
+			URL:'',
+			background:'#fff',
+			foreground:'#000'
 		}
 	},
 	created(){
@@ -54,6 +98,16 @@ export default {
 			let res = await API.getPapers()
 			console.log('getPapers',res)
 			this.papers = res.data
+		},
+		dialog(id){
+			this.URL= location.host + '/answer.html#/' + id
+			this.dialogFormVisible = true
+		},
+		showTip(){
+			this.disabled = false
+			setTimeout( () =>{
+				this.disabled = true
+			},1000)
 		}
 	}
 }
@@ -103,6 +157,9 @@ export default {
 @media screen and (max-width: 767px) {
 	.papers{
 	  margin: 24px 15px;
+	}
+	.el-dialog {
+    width: 90%;
 	}
 }
 </style>
