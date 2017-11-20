@@ -40,7 +40,17 @@ router
 	const time = new Date().getTime()
 	const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
 	data.created_at = now
-	await fs.write(`./models/answers/${time}-${data.name}.json`,data)
+	const records = await fs.read(`./models/records/records.json`)
+	data.updated_at = now
+	records.data.push({
+		name : data.name,
+		created_at : now,
+		path:`./models/answers/${time}-${data.name}.json`
+	})
+	await Promise.all([
+		fs.write(`./models/answers/${time}-${data.name}.json`,data),
+		fs.write(`./models/records/records.json`,records)
+	])
 	ctx.body = '提交成功'
 })
 /**
@@ -292,6 +302,10 @@ router
 	reports.updated_at = moment().format('YYYY-MM-DD HH:mm:ss')
 	await fs.write(`./models/reports/${id}.${query}.json`, reports)
 	ctx.body = '删除成功'
+})
+.get('/records', async ctx =>{
+	const records = await fs.read('./models/records/records.json')
+	ctx.body = records.data
 })
 
 module.exports = router

@@ -133,7 +133,9 @@
 
 			<h2>感觉统合评定量表</h2>
 
-			<checklist v-for="item in common" :title="item.title" 
+			<checklist v-for="(item,index) in common" 
+				:key="index"
+				:title="item.title" 
 				:options="item.options" 
 				v-model="item.value" 
 				:max="1"></checklist>
