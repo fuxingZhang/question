@@ -54,7 +54,7 @@
 					    <el-input
 							  type="textarea"
 							  resize="none"
-							  :autosize="{ minRows: 7, maxRows: 10}"
+							  :autosize="{ minRows: 7, maxRows: 7}"
 							  placeholder="请输入内容"
 							  v-model="data.content">
 							</el-input>
@@ -86,7 +86,8 @@ export default {
 			items:[],
 			id:null,
 			query:null,
-			currentIndex: null
+			currentIndex: null,
+			status: 'submit'  //'put'
 		}
 	},
 	created(){
@@ -96,7 +97,7 @@ export default {
 	},
 	methods:{
 		init(){
-			this.title = '编辑报告'
+			this.title = '添加报告'
 			this.data = {
 				title:'',
 				max:'',
@@ -112,6 +113,7 @@ export default {
 		addReport(){
 			this.init()
 			this.currentIndex = null
+			this.status = 'submit'
 		},
 		async deleteReport(index){
 			let res = await API.deleteReport(this.id,this.query,index)
@@ -121,6 +123,7 @@ export default {
 					return i != index
 				})
 				this.init()
+				this.status = 'submit'
 			}
 			this.$message({
         showClose: true,
@@ -132,6 +135,7 @@ export default {
 			this.title = '编辑报告'
 			this.data = this.items[index]
 			this.currentIndex = index
+			this.status = 'put'
 		},
 		async submit(){
 			if( !this.data.title ){
@@ -166,7 +170,9 @@ export default {
         });
 				return
 			}
-			this.items.push(this.data)
+			if( this.status == 'submit' ){
+				this.items.push(this.data)
+			}
 			console.log(this.items)
 			let res = await API.reportsEdit(this.id,this.query,this.items)
 			console.log('reportsEdit',res)
@@ -175,7 +181,8 @@ export default {
         message: res.data,
         type: res.status == 200 ? 'success' : 'error'
       });
-			res.status == 200 ? this.init() : this.items.pop()
+      if( res.status != 200 ) this.items.pop()
+      if( res.status ==200 && this.status == 'submit' ) this.init()
 		}
 	}
 }

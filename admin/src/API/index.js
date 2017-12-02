@@ -87,5 +87,11 @@ export default {
   },
   getRecords(){
     return request.get('/records')
+  },
+  getReport(id){
+    return request.get('/report/' + id)
+  },
+  getAnswer(id){
+    return request.get('/userAnswer/' + id)
   }
 }

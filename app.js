@@ -43,6 +43,10 @@ app
 
 // error
 app.on('error', (err, ctx) => {
+	if ( ctx.url == '/favicon.ico' ) {
+		console.log('get favicon.ico')
+		return
+	}
   console.error('server error', err, ctx)
   ctx.throw( err.status || 500, err)
 })

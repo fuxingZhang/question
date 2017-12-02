@@ -17,9 +17,12 @@ request.interceptors.response.use((response) => {
 
 export default {
   get(id){
-    return request.get('/answer/'+id)
+    return request.get('/answer/' + id)
   },
   submit(id,data){
-    return request.post('/answer/'+id, data)
+    return request.post('/answer/' + id, data)
   },
+  getReport(id){
+    return request.get('/report/' + id)
+  }
 }

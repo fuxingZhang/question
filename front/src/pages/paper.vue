@@ -117,7 +117,7 @@
 
 		  <checklist title="四、语言现状（多选）" 
 				:options="['口吃','发音不清','自言自语','固定音调','鹦鹉学舌','发音困难','说话声小','不爱讲话','其他']" 
-				v-model="question5" required></checklist>
+				v-model="question4" required></checklist>
 
 		  <checklist title="五、行为表现（多选）" 
 				:options="['小动作多（吸手指、摸生殖器等）','注意力不集中，东张西望','攻击他人','自伤行为','多动','刻板行为','其他']" 
@@ -199,11 +199,11 @@ export default {
 			question6:[],
 			question7:'',
 			common: [
-				{
-					title:'999',
-					options:['没有','很少','偶尔','常常','总是'],
-					value:[]
-				}
+				// {
+				// 	title:'999',
+				// 	options:['没有','很少','偶尔','常常','总是'],
+				// 	value:[]
+				// }
 			],
 		}
 	},
@@ -223,6 +223,12 @@ export default {
 		async submit(event){
 			let res = await API.submit(this.id,this.$data)
 			console.log(res.data)
+			return
+			if( res.status == 200 ){
+				this.$router.push('/report/' + res.data.report_id)
+			}else{
+				this.$vux.toast.text(res.data, 'top')
+			}
 			event.preventDefault()
 		}
 	}

@@ -39,19 +39,87 @@ router
 	const data = ctx.request.body
 	const time = new Date().getTime()
 	const now = moment(time).format('YYYY-MM-DD HH:mm:ss')
+	//用户提交的问卷数据
+	const userData = JSON.parse( JSON.stringify(data.common) )
+	//获取类目长度
+	const paper = await fs.read((`./models/papers/${id}.json`))
+	const categories = paper.categories
+	let files = []
+	let reports = []
+	for( let query in categories ){
+		files.push(fs.read(`./models/questions/${id}.${query}.json`))
+		reports.push(fs.read(`./models/reports/${id}.${query}.json`))
+	}
+	let arr = await Promise.all(files)
+	let arr2 = await Promise.all(reports)
+	let length_arr = []   // [6,4,16]
+	let arr_reports = []  //测评报告模板数组
+	for( let item of arr ){
+		length_arr.push(item.items.length)
+	}
+	for( let item of arr2 ){
+		arr_reports.push(item.items)
+	}
+	
+	//依照类目切割common
+	let categories_arr = []
+	for( let n of length_arr ){
+		categories_arr.push(userData.splice(0, n))
+	}
+	//依照类目的得分数组
+	let scores = []
+	for( let items of categories_arr ){
+		let score = 0
+		let options = ["没有","很少","偶尔","常常","总是"]
+		items.forEach( (item) =>{
+			score += options.indexOf(item.value[0]) + 1
+		})
+		scores.push(score)
+	}
+	console.log('scores',scores)
+	
+	//生成用户提交的报告
+	const userReport = {
+		created_at : now,
+		paper_name: paper.title,
+		data: []
+	}
+	for( let i in scores ){
+		arr_reports[i].forEach( (item) =>{
+			if( scores[i] >= item.min && scores[i] <= item.max ){
+				item.score = scores[i]
+				userReport.data.push(item)
+			}
+		})
+	}
+	//保存用户提交的数据
 	data.created_at = now
+	data.paper_name = paper.title
 	const records = await fs.read(`./models/records/records.json`)
 	data.updated_at = now
 	records.data.push({
 		name : data.name,
 		created_at : now,
-		path:`./models/answers/${time}-${data.name}.json`
+		id: `${time}-${data.name}`
 	})
 	await Promise.all([
-		fs.write(`./models/answers/${time}-${data.name}.json`,data),
-		fs.write(`./models/records/records.json`,records)
+		fs.write(`./models/answers/${time}-${data.name}.json`, data),
+		fs.write(`./models/records/records.json`, records),
+		fs.write(`./models/userReports/${time}-${data.name}.json`, userReport)
 	])
-	ctx.body = '提交成功'
+	ctx.body = {
+		report_id : `${time}-${data.name}`
+	}
+})
+.get('/report/:id', async ctx =>{
+	const id =  ctx.params.id
+	const report = await fs.read(`./models/userReports/${id}.json`)
+	ctx.body = report
+})
+.get('/userAnswer/:id', async ctx =>{
+	const id =  ctx.params.id
+	const answer = await fs.read(`./models/answers/${id}.json`)
+	ctx.body = answer
 })
 /**
 	*  管理后台
