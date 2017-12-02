@@ -223,7 +223,6 @@ export default {
 		async submit(event){
 			let res = await API.submit(this.id,this.$data)
 			console.log(res.data)
-			return
 			if( res.status == 200 ){
 				this.$router.push('/report/' + res.data.report_id)
 			}else{
