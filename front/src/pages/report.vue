@@ -20,7 +20,8 @@
 		</div>
 		<p class="title">三、测评报告结果</p>
 		<div class="main">
-			<h2>图标对比</h2>
+			<h2 style="margin-bottom: 30px;">图表对比</h2>
+			<div ref="myChart" style="width: 100%;height:400px;"></div>
 			<p style="margin-top: 15px;">“感觉统合”是大脑和身体相互协调的学习过程。指机体在环境内有效利用自己的器官，以不同的感觉通路（视觉、听觉、味觉、嗅觉、触觉、前庭觉和本体等）从环境中获得信息输入大脑，大脑再对其信息进行加工处理，并做出适应性反应的能力，其中，前庭觉、触觉、本体觉是非常重要且关键的三大觉。</p>
 		</div>
 		<div class="main" v-for="(item,index) in items" key="index">
@@ -30,7 +31,7 @@
 		<p style="margin: 25px 0 20px 30px;font-size: 20px;">四、综合建议</p>
 		<div class="main">
 			<h2>综合建议</h2>
-			<p style="margin-top: 15px;">您的孩子处在｛2~4｝岁年龄段，为{{answer.question1.first[0]}}，经过测评，{{result}}。</p>
+			<p style="margin-top: 15px;">您的孩子处在{{ageRange}}年龄段，为{{answer.question1.first[0]}}，经过测评，{{result}}。</p>
 			<p style="margin-top: 15px;">若想进一步了解孩子报告及更多详细信息，请联系客服老师：15122294847（微信号同手机号）</p>
 		</div>
 		<div class="main">
@@ -51,6 +52,7 @@
 <script>
 import API from '@/API'
 import { XButton } from 'vux'
+import echarts from 'echarts'
 
 export default {
 	components:{
@@ -66,12 +68,74 @@ export default {
 					first: []
 				}
 			},
-			result: '不存在失调倾向'
+			result: '不存在失调倾向',
+			ageRange: '0 ~ 3岁',
+			scores:[],
+			commonScores:[]
 		}
 	},
 	created(){
 		this.getReport( this.$route.params.id )
 		this.getAnswer( this.$route.params.id )
+	},
+	updated(){
+		const myChart = echarts.init(this.$refs.myChart);
+		myChart.setOption({
+    tooltip : {
+      trigger: 'axis',
+      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+          type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    legend: {
+      data:['正常','您的值'],
+      textStyle : {
+				fontSize : 16
+			}
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis : [
+      {
+        type : 'category',
+        data : ["前庭觉", "触觉", "本体觉"],
+	      axisLabel : {
+					fontSize : 16
+				}
+      }
+    ],
+    yAxis : [
+      {
+        type : 'value'
+      }
+    ],
+    series : [
+        {
+          name:'正常',
+          type:'bar',
+          data:this.commonScores,
+          itemStyle:{  
+          	normal:{  
+             	color: 'rgba(1,152,101,.8)'
+            }  
+          },
+        },
+        {
+          name:'您的值',
+          type:'bar',
+          data:this.scores,
+          itemStyle:{  
+          	normal:{  
+             	color: 'rgba(0,173,239,.8)'
+            }  
+          },
+        }
+		   ]
+		});
 	},
 	methods:{
 		async getReport(id){
@@ -79,7 +143,10 @@ export default {
 			console.log(res.data)
 			console.log(res.data.data)
 			this.paper_name = res.data.paper_name
+			this.scores = res.data.scores
+			this.commonScores = res.data.commonScores
 			this.items = res.data.data
+			//是否失调
 			let data = ''
 			for(let item of this.items){
 				data += item.title
@@ -91,6 +158,17 @@ export default {
 		async getAnswer(id){
       let res = await API.getAnswer(id)
       console.log(res)
+      // 年龄段
+			const age = +res.data.age
+			if( age > 12 ){
+				this.ageRange = '12岁以上'
+			}else if( age>6 && age <=12 ){
+				this.ageRange = '6 ~ 12岁'
+			}else if( age>3 && age <=6 ){
+				this.ageRange = '3 ~ 6岁'
+			}else{
+				this.ageRange = '0 ~ 3岁'
+			}
       if( res.data.question1.first[0] == '自然产' ){
       	res.data.question1.first[0] = '自然生产'
       }
