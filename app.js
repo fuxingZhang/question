@@ -42,13 +42,13 @@ app
 .use(IndexRouter.routes())
 
 // error
-app.on('error', (err, ctx) => {
+app.on('error', async (err, ctx) => {
 	if ( ctx.url == '/favicon.ico' ) {
 		console.log('get favicon.ico')
 		return
 	}
-  console.error('server error', err, ctx)
-  ctx.throw( err.status || 500, err)
+  console.error('server error msg :', err)
+  console.error('server error ctx :', ctx)
 })
 
 app.listen(3000)

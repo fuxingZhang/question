@@ -4,7 +4,6 @@
 const moment = require('moment') 
 const Promise = require('bluebird')
 const fs = require('../utils/fs.bluebird')
-const _fs = require("fs")
 const Router = require('koa-router')
 const router  = new Router({
   prefix: '/api'
