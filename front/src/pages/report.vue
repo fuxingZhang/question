@@ -90,7 +90,7 @@ export default {
     legend: {
       data:['正常','您的值'],
       textStyle : {
-				fontSize : 16
+				fontSize : 14
 			}
     },
     grid: {
@@ -104,7 +104,7 @@ export default {
         type : 'category',
         data : ["前庭觉", "触觉", "本体觉"],
 	      axisLabel : {
-					fontSize : 16
+					fontSize : 14
 				}
       }
     ],
@@ -143,9 +143,19 @@ export default {
 			console.log(res.data)
 			console.log(res.data.data)
 			this.paper_name = res.data.paper_name
-			this.scores = res.data.scores
-			this.commonScores = res.data.commonScores
-			this.items = res.data.data
+			//分数处理合并
+			let scores = res.data.scores
+			let commonScores = res.data.commonScores.map( (item) =>{
+				return +item
+			})
+			this.scores = [scores[0]+scores[1]+scores[5], scores[2], scores[3]]
+			this.commonScores = [commonScores[0]+commonScores[1]+commonScores[5], commonScores[2], commonScores[3]]
+			console.log(this.scores)
+			console.log(this.commonScores)
+
+			this.items = res.data.data.filter( (item) =>{
+				return item.title.indexOf('空间') == -1 && item.title.indexOf('重力') == -1
+			})
 			//是否失调
 			let data = ''
 			for(let item of this.items){

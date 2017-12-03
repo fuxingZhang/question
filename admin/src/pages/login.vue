@@ -73,15 +73,15 @@ export default {
         });
         return
       }
-      // const reg = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
-      // if( !reg.test(this.email) ){
-      //   this.$message({
-      //     showClose: true,
-      //     message: '邮箱格式不正确',
-      //     type: 'error'
-      //   });
-      //   return
-      // }
+      const reg = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
+      if( !reg.test(this.email) ){
+        this.$message({
+          showClose: true,
+          message: '邮箱格式不正确',
+          type: 'error'
+        });
+        return
+      }
       if( !this.password ){
         this.$message({
           showClose: true,
@@ -90,14 +90,14 @@ export default {
         });
         return
       }
-      // if( this.password.length < 6 ){
-      //   this.$message({
-      //     showClose: true,
-      //     message: '密码长度最少6位',
-      //     type: 'error'
-      //   });
-      //   return
-      // }
+      if( this.password.length < 6 ){
+        this.$message({
+          showClose: true,
+          message: '密码长度最少6位',
+          type: 'error'
+        });
+        return
+      }
       let res = await API.login({
         email: this.email,
         password: this.password

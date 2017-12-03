@@ -253,7 +253,7 @@ export default {
       tableData: [],
       userReportsVisible: false,
       answerDetailVisible: false,
-      userInfoVisible: true,
+      userInfoVisible: false,
       report:{
         paper_name: '',
         data: []

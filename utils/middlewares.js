@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   async checkLogin(ctx, next) {
-    //console.log('checkLogin', ctx.cookies.get('token-zfx'))
+    console.log('checkLogin', ctx.cookies.get('token-zfx'))
     let token = ctx.cookies.get('token-zfx')
     if( !token ){
       ctx.throw(401,'unauthorized')

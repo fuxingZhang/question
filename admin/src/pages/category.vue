@@ -65,7 +65,8 @@ export default {
 			},
 			id:null,
 			query:null,
-			currentIndex: null
+			currentIndex: null,
+			status: 'submit'
 		}
 	},
 	created(){
@@ -77,6 +78,7 @@ export default {
 	methods:{
 		init(){
 			this.title = '添加问题'
+			this.status = 'submit'
 			this.data = {
 				title:'',
 				options:['没有','很少','偶尔','常常','总是']
@@ -108,6 +110,7 @@ export default {
 		},
 		show(index){
 			this.title = '编辑问题'
+			this.status = 'edit'
 			this.data = this.items[index]
 			this.currentIndex = index
 		},
@@ -136,7 +139,9 @@ export default {
         });
 				return
 			}
-			this.items.push(this.data)
+			if( this.status == 'submit' ){
+				this.items.push(this.data)
+			}
 			console.log(this.items)
 			let res = await API.questionsEdit(this.id,this.query,this.items)
 			console.log('questionsEdit',res)
@@ -145,7 +150,12 @@ export default {
         message: res.data,
         type: res.status == 200 ? 'success' : 'error'
       });
-			res.status == 200 ? this.init() : this.items.pop()
+      if( res.status != 200 ){
+      	this.items.pop()
+      }
+      if( res.status == 200 && this.status == 'submit' ){
+      	this.init()
+      }
 		}
 	}
 }

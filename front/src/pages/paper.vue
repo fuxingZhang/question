@@ -221,6 +221,10 @@ export default {
 			this.common = res.data.data
 		},
 		async submit(event){
+			if( !this.birthday || !this.parentName || !this.age || !this.relation || !this.job || !this.address || !this.parentName || !this.phone || !this.question7 ){
+				// this.$vux.toast.text('您有信息漏填', 'top')
+				return
+			}
 			let res = await API.submit(this.id,this.$data)
 			console.log(res.data)
 			if( res.status == 200 ){

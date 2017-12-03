@@ -52,7 +52,7 @@ export default {
 			console.log(res)
 			if( res.err ) return
 			this.categories = res.data.categories
-		console.log(this.categories)
+			console.log(this.categories)
 		}
 	}
 }

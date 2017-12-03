@@ -46,6 +46,7 @@ router
 	const categories = paper.categories
 	let files = []
 	let reports = []
+	let commonScores = []
 	for( let query in categories ){
 		files.push(fs.read(`./models/questions/${id}.${query}.json`))
 		reports.push(fs.read(`./models/reports/${id}.${query}.json`))
@@ -59,8 +60,9 @@ router
 	}
 	for( let item of arr2 ){
 		arr_reports.push(item.items)
+		commonScores.push(+item.items[0].max)
 	}
-	
+	console.log('commonScores',commonScores)
 	//依照类目切割common
 	let categories_arr = []
 	for( let n of length_arr ){
@@ -77,11 +79,13 @@ router
 		scores.push(score)
 	}
 	console.log('scores',scores)
-	
+
 	//生成用户提交的报告
 	const userReport = {
 		created_at : now,
 		paper_name: paper.title,
+		scores,
+		commonScores,
 		data: []
 	}
 	for( let i in scores ){
@@ -165,7 +169,7 @@ router
 })
 
 const middlewares = require('../utils/middlewares')
-// router.use(middlewares.checkLogin)
+router.use(middlewares.checkLogin)
 
 router
 .post('/logout', async ctx =>{
