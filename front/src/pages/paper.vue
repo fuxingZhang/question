@@ -31,7 +31,7 @@
 
 		  <group title="一、孕期状况">
 		  	<checklist title="1.孕期" 
-		  		:options="['早产','足产','自然产','剖腹产']" 
+		  		:options="['早产','足产','自然产','剖宫产']" 
 		  		v-model="question1.first" 
 		  		:max="1" required></checklist>
 		  	<checklist title="2.母亲怀孕期间活动量" 
@@ -61,7 +61,7 @@
 		  		:max="1" required></checklist>
 		  	<x-input title="爬行时间" type="number" v-model="question2.second[1]" placeholder="请输入年龄（数字）" required></x-input>
 		  	<checklist title="是否用学步车" 
-		  		:options="['右手','左手','不分']" 
+		  		:options="['是','否']" 
 		  		v-model="question2.second[2]" 
 		  		:max="1" required></checklist>
 
