@@ -291,7 +291,8 @@ export default {
         },
         question4:[],
         question5:[],
-        question6:''
+        question6:[],
+        question7:'',
       }
     }
   },
