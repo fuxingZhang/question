@@ -126,7 +126,7 @@
       <!-- 孕期状况 -->
       <h3 class="info-h3">一、孕期状况</h3>
       <div class="info-small-title">1.孕期</div>
-      <div v-for="item in ['早产','足产','自然产','剖腹产']"  style="margin-bottom: 10px;">
+      <div v-for="item in ['早产','足产','自然产','剖宫产']"  style="margin-bottom: 10px;">
         <el-radio v-model="info.question1.first[0]" :label="item" readonly>{{item}}</el-radio>
       </div>
       <div class="info-small-title">2.母亲怀孕期间活动量</div>
@@ -163,7 +163,7 @@
         </el-form-item>
       </el-form>
       <div class="info-small-title">是否用学步车</div>
-      <div v-for="item in ['右手','左手','不分']"  style="margin-bottom: 10px;">
+      <div v-for="item in ['是','否']"  style="margin-bottom: 10px;">
         <el-radio v-model="info.question2.second[2][0]" :label="item" readonly>{{item}}</el-radio>
       </div>
       <div class="info-small-title">3.安全感发展</div>
