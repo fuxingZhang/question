@@ -1,6 +1,6 @@
 <template>
 	<div class="back">
-		<h1 class="p1">您提报的资料公司已收到，客服人员（15122294847）<br/>
+		<h1 class="p1">您提报的资料公司已收到，<br/>客服人员（15122294847）<br/>
 			将在24小时内和您取得联系，请耐心等待。<br/>您也可以扫描二维码了解更多详情。</h1>
 		<img class="er2" src="https://s1.ax1x.com/2017/12/20/XOOr4.jpg" />
 	</div>
