@@ -252,14 +252,15 @@ export default {
 		},
 		async submit(event){
 			if( !this.birthday || !this.parentName || !this.age || !this.relation || !this.job || !this.address || !this.parentName || !this.phone || !this.question7 ){
-				// this.$vux.toast.text('您有信息漏填', 'top')
+				this.$vux.toast.text('您有信息漏填', 'top')
 				return
 			}
 			let res = await API.submit(this.id,this.$data)
 			console.log(res.data)
 			if( res.status == 200 ){
 				// this.$router.push('/report/' + res.data.report_id)
-				this.$router.push('/back/')
+				location.href = '/#/back/'
+				// this.$router.push('/back/')
 			}else{
 				this.$vux.toast.text(res.data, 'top')
 			}
