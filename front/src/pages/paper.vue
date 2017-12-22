@@ -259,7 +259,7 @@ export default {
 			console.log(res.data)
 			if( res.status == 200 ){
 				// this.$router.push('/report/' + res.data.report_id)
-				location.href = '/#/back/'
+				location.hash = '/back/'
 				// this.$router.push('/back/')
 			}else{
 				this.$vux.toast.text(res.data, 'top')
