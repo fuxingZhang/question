@@ -251,6 +251,8 @@ export default {
 			this.common = res.data.data
 		},
 		async submit(event){
+			event.preventDefault()
+
 			if( !this.birthday || !this.parentName || !this.age || !this.relation || !this.job || !this.address || !this.parentName || !this.phone || !this.question7 ){
 				this.$vux.toast.text('您有信息漏填', 'top')
 				return
@@ -259,12 +261,11 @@ export default {
 			console.log(res.data)
 			if( res.status == 200 ){
 				// this.$router.push('/report/' + res.data.report_id)
-				location.hash = '/back/'
+				window.location.hash = '/back/'
 				// this.$router.push('/back/')
 			}else{
 				this.$vux.toast.text(res.data, 'top')
 			}
-			event.preventDefault()
 		}
 	}
 }
