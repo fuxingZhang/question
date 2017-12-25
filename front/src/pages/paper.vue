@@ -9,15 +9,15 @@
 对儿童感觉统合的发展进行全面，深入的了解，让儿童在最强(0-6岁)，最有效(6-12岁)的年龄段，提升天花板的高度，提升学习效率，弥补弱项，让优者更优。
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 由冯绍伟专家带领祥和团队主持申报的“创新家庭感统训练方法促进儿童心智发展的研究”的课题已被列为国家教师科研十二五规划重点课题“教师专业发展研究”的专项研究课题。<br/><br/>
-我们的愿景：<br/>
-让每个家庭祥和、幸福<br/>
-让每个孩子身心健康的成长<br/>
-我们的使命：<br/>
-凝聚社会爱心力量<br/>
-提升家庭幸福指数<br/>
-我们的价值观：<br/>
-诚信负责 精准服务<br/>
-合作共赢 自我成长<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们的愿景：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;让每个家庭祥和、幸福<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;让每个孩子身心健康的成长<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们的使命：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;凝聚社会爱心力量<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提升家庭幸福指数<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们的价值观：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;诚信负责 精准服务<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合作共赢 自我成长<br/>
 </p>
 		</div>
 
@@ -34,16 +34,15 @@
 多数时候孩子做出来的一些家长认为是他表现不好的事情，比如：情绪不稳定、人际交往差、学习力差、专注力差、坐不住、站没站相，坐没坐相等等的时候，其实那并不是孩子的本意，而是感觉统合失调的表现。
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 感觉统合训练可以有效的改善儿童感觉统合失调，感觉统合训练做得越早对孩子发育越有效，最迟不能超过12周岁。如果超过12周岁，孩子的有效训练期就会错过。
-<br/>
+<br/><br />
 <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;教育的最大成本不是金钱，而是时间!</b><br/>
 
-<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您想了解孩子在感统方面的发展状况，请认真填写以下资料。</b>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果您想了解孩子在感统方面的发展状况，请认真填写以下资料。(公司承诺您填写的信息仅用于测评，严格保密。)</b>
+
+
 </p>
 		</div>
-		<div class="head">
-			<h1>感统测评</h1>
-			<p>感统测评</p>
-		</div>
+
 		<h2>感觉统合基础资料表</h2>
 		<form>
 			<group title="基础信息">
