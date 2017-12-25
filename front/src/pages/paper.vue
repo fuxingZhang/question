@@ -150,8 +150,6 @@
 		  		v-model="question3.first[4]"
 		  		:max="1" required></checklist>
 
-		  	<x-input class="long" title="沟通方式" v-model="question3.second" placeholder="沟通方式" required></x-input>
-
 		  	<x-input class="long" title="父母夫妻关系如何" v-model="question3.third" placeholder="很好、好、还不错、不好" required></x-input>
 		  </group>
 
