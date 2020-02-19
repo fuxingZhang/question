@@ -38,9 +38,15 @@
     "friendly-errors-webpack-plugin": "^1.1.3",
     "function-bind": "^1.1.0",
     "html-webpack-plugin": "^2.28.0",
+<<<<<<< HEAD
     "http-proxy-middleware": "^1.0.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+=======
+    "http-proxy-middleware": "^0.17.3",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "semver": "^5.3.0",
+>>>>>>> 7acf14799872991e66729fae89f898a47ed35d7a
     "opn": "^4.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "ora": "^1.1.0",
